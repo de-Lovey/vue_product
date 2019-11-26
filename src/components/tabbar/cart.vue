@@ -103,12 +103,24 @@
         productListByOrderCount: []    // 热销商品
       }
     },
+    created(){
+      console.log(1);
+
+    },
     mounted: function () {
       this.getShoppingcarListByUserId(this.$userInfo.id);
 
     },
     methods: {
       getShoppingcarListByUserId: function (userId) {
+        //先判断是否登录过
+        if (!this.$getCookie("userName")) {
+          this.$router.push({
+            path: "/login"
+          });
+          return this.$mui.toast('请先登录');
+        }
+
         var data = {
           model: {
             userId: userId
@@ -255,9 +267,9 @@
         this.pay(temp)
       },
       pay: function (arr) {
+        console.log(arr);
         this.$axios.post('/pay', arr).then(res => {
           if (res.data.code == 200) {
-
 
             console.log(res.data.content)
             this.$router.push({path: '/user/pay', query: {orderId: res.data.content.id}})
