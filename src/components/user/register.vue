@@ -1,7 +1,7 @@
 <template>
     <div>
       <header style="z-index: 10000;" class="mui-bar mui-bar-nav">
-        <a href="javascript:history.back()" class="backFont mui-icon mui-pull-left"></a>
+        <a href="javascript:history.back()" class="mintui mintui-back"></a>
         <h1 class="mui-title">注册</h1>
       </header>
       <div class="mui-content">

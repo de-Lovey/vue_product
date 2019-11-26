@@ -71,7 +71,7 @@
         this.$router.push({path:'/register'})
       },
       toForget:function(){
-        this.$router.push({path:'/forget'})
+        this.$router.push({path:'/user/forget'})
       }
     },
     mounted:function(){
@@ -98,5 +98,7 @@
 .link-area{
   text-align: center;
 }
+
+
 
 </style>

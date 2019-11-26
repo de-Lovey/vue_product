@@ -11,7 +11,7 @@ Vue.prototype.$setCookie = function(name, value) {
   //此 cookie 将被保存 1 小时
   var hour = 1;
   var exp = new Date();
-  exp.setTime(exp.getTime() + hour * 60 * 60 * 1000);
+  exp.setTime(exp.getTime() + hour * 60 * 60 * 1000*12); //保存12个小时
   document.cookie = name + "=" + value + ";expires=" + exp.toGMTString();
   console.log(name, value);
 }
@@ -24,3 +24,6 @@ Vue.prototype.$deleteCookie = function(name) {
     document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
   }
 }
+
+// 添加全局用户信息
+Vue.prototype.$userInfo={}

@@ -1,61 +1,70 @@
 <template>
-  <div class="lt_content">
-    <div class="lt_wrap">
+  <div>
+    <vp-top :title="'分类'"></vp-top>
 
-      <div class="cate_left">
-        <ul>
-          <li v-for="(item,index) in productTypeList" @click="changeType(item,index)" :class="{'now':position==index}">
-            <a>{{item.producttypeName}}</a></li>
+    <div class="lt_content">
+      <div class="lt_wrap">
+        <div class="cate_left">
+          <ul>
+            <li v-for="(item,index) in productTypeList" @click="changeType(item,index)" :class="{'now':position==index}">
+              <a>{{item.producttypeName}}</a></li>
 
-        </ul>
-      </div>
-      <div class="cate_right">
-        <div class="hot">
-          <h3>新品推荐</h3>
-          <ul class="clearFix">
-            <li @click="toProductDetail(item.id)" v-for="item in productListByCreateTime">
-              <a>
-                <img :src="item.productImg" alt=""/>
-                <p>{{item.productName}}</p>
-              </a>
-            </li>
           </ul>
-          <p v-show="productListByCreateTime.length==0" class="noProduct">暂无商品</p>
         </div>
-        <div class="hot">
-          <h3>热销商品</h3>
-          <ul class="clearFix">
-            <li @click="toProductDetail(item.id)" v-for="item in productListByOrderCount">
-              <a>
-                <img :src="item.productImg" alt=""/>
-                <p>{{item.productName}}</p>
-              </a>
-            </li>
-          </ul>
-          <p v-show="productListByOrderCount.length==0" class="noProduct">暂无商品</p>
-        </div>
+        <div class="cate_right">
+          <div class="hot">
+            <h3>新品推荐</h3>
+            <ul class="clearFix">
+              <li @click="toProductDetail(item.id)" v-for="item in productListByCreateTime">
+                <a>
+                  <img :src="item.productImg" alt=""/>
+                  <p>{{item.productName}}</p>
+                </a>
+              </li>
+            </ul>
+            <p v-show="productListByCreateTime.length==0" class="noProduct">暂无商品</p>
+          </div>
+          <div class="hot">
+            <h3>热销商品</h3>
+            <ul class="clearFix">
+              <li @click="toProductDetail(item.id)" v-for="item in productListByOrderCount">
+                <a>
+                  <img :src="item.productImg" alt=""/>
+                  <p>{{item.productName}}</p>
+                </a>
+              </li>
+            </ul>
+            <p v-show="productListByOrderCount.length==0" class="noProduct">暂无商品</p>
+          </div>
 
-        <div class="hot">
-          <h3>热门商品</h3>
-          <ul class="clearFix">
-            <li @click="toProductDetail(item.id)" v-for="item in productListByViewNum">
-              <a>
-                <img :src="item.productImg" alt=""/>
-                <p>{{item.productName}}</p>
-              </a>
-            </li>
-          </ul>
-          <p v-show="productListByViewNum.length==0" class="noProduct">暂无商品</p>
+          <div class="hot">
+            <h3>热门商品</h3>
+            <ul class="clearFix">
+              <li @click="toProductDetail(item.id)" v-for="item in productListByViewNum">
+                <a>
+                  <img :src="item.productImg" alt=""/>
+                  <p>{{item.productName}}</p>
+                </a>
+              </li>
+            </ul>
+            <p v-show="productListByViewNum.length==0" class="noProduct">暂无商品</p>
 
+          </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
+  import vpTop from '../subComponents/vpTop'
+
   export default {
     name: 'category',
+    components:{
+      vpTop
+    },
     data() {
       return {
         productTypeList: [],  // 商品分类列表
@@ -69,17 +78,13 @@
     methods: {
       //1.一级分类
       getAllProductType() {
-        this.$axios({
-          url: "/getAllProducttype",
-          method: 'post',
-          data: {
-            model: {},
-            orderParams: [
-              'viewNum desc'
-            ],
-            pageNum: 0,
-            pageSize: 1000  // 默认1000 商品分类不会太多
-          }
+        this.$axios.post("/getAllProducttype",{
+          model: {},
+          orderParams: [
+            'viewNum desc'
+          ],
+          pageNum: 0,
+          pageSize: 1000  // 默认1000 商品分类不会太多
         }).then((res) => {
           console.log(res)
           this.productTypeList = res.data.content.list

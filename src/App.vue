@@ -1,11 +1,7 @@
 <template>
   <div class="app-container">
     <!--顶部header区域-->
-    <mt-header title="vpShop" >
-            <span slot="left" @click="goBack" v-show="flag">
-                <mt-button icon="back">返回</mt-button>
-            </span>
-    </mt-header>
+
     <!--router路由区域-->
 
     <transition>
@@ -24,7 +20,7 @@
       </router-link>
       <router-link class="mui-tab-item-my" to="/cart">
                 <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-                    <span class="mui-badge">9</span>
+
                 </span>
         <span class="mui-tab-label">购物车</span>
       </router-link>
@@ -39,8 +35,12 @@
 
 
 <script>
+  import vpTop from './components/subComponents/vpTop'
   export default {
     name: "app",
+    components:{
+      vpTop
+    },
     data(){
       return {
         flag: false
@@ -71,18 +71,18 @@
           console.log(err)
         })
       },
-      goBack(){
-        this.$router.go(-1);
-      }
+      // goBack(){
+      //   this.$router.go(-1);
+      // }
     },
-    created(){
-      this.flag = this.$route.path === "/home" ? false : true;
-    },
-    watch:{
-      '$route.path': function (newVal) {
-        this.flag =  newVal === "/home" ? false : true;
-      }
-    }
+    // created(){
+    //   this.flag = this.$route.path === "/home" ? false : true;
+    // },
+    // watch:{
+    //   '$route.path': function (newVal) {
+    //     this.flag =  newVal === "/home" ? false : true;
+    //   }
+    // }
   }
 
 </script>
@@ -90,11 +90,17 @@
 
 
 
-<style scoped lang="less">
+<style  lang="less">
+  html,
+  body{
+    height: 100%;
+  }
   .app-container {
-    padding-top: 40px;
+    height: 100%;
     padding-bottom: 50px;
+    padding-top: 40px;
     overflow-x: hidden;
+    position: relative;
   }
   .mint-header{
     position: fixed;
@@ -103,20 +109,25 @@
     top: 0;
   }
 
-  .v-enter {
-    opacity: 0;
-    transform: translateX(100%);
+  .mui-content{
+    background-color: #fff!important;
   }
 
-  .v-leave-to {
-    opacity: 0;
-    transform: translateX(-100%);
-    position: absolute;
-  }
+  /*.v-enter {*/
+    /*opacity: 0;*/
+    /*transform: translateX(100%);*/
+  /*}*/
 
-  .v-enter-active, .v-leave-active {
-    transition: all 1s;
-  }
+  /*.v-leave-to {*/
+    /*opacity: 0;*/
+    /*transform: translateX(-100%);*/
+    /*position: absolute;*/
+  /*}*/
+
+  /*.v-enter-active, .v-leave-active {*/
+    /*transition: all 1s;*/
+    /*overflow: hidden;*/
+  /*}*/
 
   /*改类名, 解决和js冲突的问题*/
   .mui-bar-tab .mui-tab-item-my {

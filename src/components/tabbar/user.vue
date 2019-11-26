@@ -1,5 +1,6 @@
 <template>
     <div>
+      <vp-top :title="'个人中心'"></vp-top>
       <div class="cz_container">
         <ul class="mui-table-view mui-table-view-chevron">
           <li class="mui-table-view-cell mui-media">
@@ -14,22 +15,28 @@
             <a @click="toEditUser" href="javascript:;" class="mui-navigate-right">账号与安全</a>
           </li>
           <li class="mui-table-view-cell">
-            <a href="../cart.html" class="mui-navigate-right">我的购物车</a>
+            <router-link to="/cart" class="mui-navigate-right">我的购物车</router-link>
           </li>
           <li class="mui-table-view-cell">
-            <a href="address.html" class="mui-navigate-right">收货地址管理</a>
+            <a @click="joke" class="mui-navigate-right">收货地址管理</a>
           </li>
         </ul>
         <div>
-          <a href="javascript:;" class="mui-btn btn_outLogin">退出登录</a>
+          <a @click="logout" href="javascript:;" class="mui-btn btn_outLogin">退出登录</a>
         </div>
       </div>
     </div>
 </template>
 
 <script>
-    export default {
+  import vpTop from '../subComponents/vpTop'
+
+
+  export default {
         name: "user",
+    components:{
+      vpTop
+    },
       data(){
           return {
             userInfo:{}
@@ -43,6 +50,9 @@
 
       },
       methods:{
+          joke(){
+            this.$mui.toast('暂未开放, 敬请期待')
+          },
           //获取用户信息
         getUserInfo: function() {
           if (!this.$getCookie("userName")) {
@@ -82,6 +92,12 @@
               userInfo: this.userInfo
             }
           });
+        },
+        //点击退出登录
+        logout:function(){
+          this.$deleteCookie('userName')
+          this.$mui.toast('安全退出')
+          this.$router.push('/login')
         },
       }
     }

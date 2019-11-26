@@ -1,0 +1,10 @@
+// 遍历数组@sizeList
+.mixin(@index) when (@index>0){
+  // 通过递归，遍历数组
+  @media (min-width:extract(@sizeList,@index)){
+    html{
+      font-size: extract(@sizeList,@index) / @width * @baseSize;
+    }
+  }
+  .mixin(@index - 1);
+}

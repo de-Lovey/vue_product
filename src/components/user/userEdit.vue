@@ -34,8 +34,12 @@
       </div>
       <div style="position: relative;" class="mui-input-row">
         <label>上传头像</label>
-        <input @change="uploadHeadPic" type="file" class="mui-input-clear uploadFile" />
-        <button class="btn_uploadFile">选择头像</button>
+        <span class="btn_uploadFile">
+          选择头像
+          <input @change="uploadHeadPic" type="file" class="mui-input-clear uploadFile" />
+        </span>
+
+
       </div>
       <div  >
         <button @click="saveUser" type="button" class="mui-btn mui-btn-block mui-btn-primary btn_save">保存</button>
@@ -56,7 +60,10 @@
         username: ""
       };
     },
+    created(){
+    },
     methods: {
+
       uploadHeadPic: function(e) {
         console.log("uploadHeadPic");
         let that = this;
@@ -72,7 +79,7 @@
             })
             .then(response => {
               console.log("upload success");
-              that.userInfo.headPic = that.$http.defaults.baseURL + "/static/" + e.target.files[0].name;
+              that.userInfo.headPic = that.$axios.defaults.baseURL + "/static/" + e.target.files[0].name;
               that.$mui.toast("头像上传成功");
             })
             .catch(err => {
@@ -103,8 +110,8 @@
                 that.$router.push("/login");
                 that.$mui.toast("密码已经更改，请重新登录");
               } else {
-                that.$mui.toast("如果你修改的是头像, 那么成功了.提示: 建议只修改密码和头像");
-                that.$router.push("/userCenter");
+                that.$mui.toast("修改成功, 请重新登录");
+                that.$router.push("/login");
               }
             } else {
               that.$mui.toast(res.data.msg);
@@ -115,9 +122,15 @@
           });
       }
     },
-    mounted: function() {
-      this.userInfo = this.$route.params.userInfo;
-      this.oldPass = this.userInfo.password;
+    created() {
+      if(this.$route.params.userInfo){
+        this.userInfo = this.$route.params.userInfo;
+        this.oldPass = this.userInfo.password;
+      }else {
+        this.$mui.toast('获取用户信息失败');
+        this.$router.push('/user');
+      }
+
     }
   };
 </script>
@@ -125,11 +138,19 @@
 <style scoped="scoped">
 .uploadFile{
   opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
   .btn_uploadFile{
-    position: absolute;
-    left: 100px;
-    top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    float: left;
+    margin-top: 4px;
   }
   .btn_save{
     width: 80%;

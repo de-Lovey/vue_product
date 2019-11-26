@@ -19,7 +19,10 @@ Vue.prototype.$axios = axios
 
 //导入mui
 import mui from '../static/lib/mui/js/mui.min.js'
-Vue.prototype.$mui = mui
+Vue.prototype.$mui = mui;
+
+//导入font-awesome
+import "font-awesome/css/font-awesome.css"
 
 // 引入layer弹框组建
 import layer from '../static/lib/layer/layer.js'
@@ -46,6 +49,8 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+
 
 
 
